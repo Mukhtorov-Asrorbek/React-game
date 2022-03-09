@@ -1,0 +1,113 @@
+@use "../../scss/" as *;
+
+.header {
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+
+  &__inner {
+    @include flex(center, space-between);
+    height: 100%;
+  }
+
+  &__logo {
+    width: 145px;
+    pointer-events: visible;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__nav {
+    @include flex(center, space-between);
+
+    li ~ li {
+      margin-left: 1rem;
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.5rem;
+      text-transform: uppercase;
+      position: relative;
+      pointer-events: visible;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 0;
+        background-color: $main-color;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::before,
+      &:hover::after {
+        width: 50%;
+      }
+
+      &::before {
+        left: 0;
+        top: 0;
+      }
+
+      &::after {
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  .nav__toggler div {
+    width: 2.5rem;
+    height: 0.2rem;
+    margin: 0.4rem;
+    background: #37c71c;
+    transition: 0.4s ease-in;
+  }
+  .nav__toggler {
+    cursor: pointer;
+    display: none;
+  }
+  .toggle .line1 {
+    transform: rotate(-45deg) translate(-6px, 8px);
+  }
+  .toggle .line2 {
+    opacity: 0;
+  }
+  .toggle .line3 {
+    transform: rotate(45deg) translate(-6px, -8px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    pointer-events: unset;
+    .nav__toggler {
+      display: block;
+      z-index: 9999;
+      margin-right: 50px;
+    }
+    &__nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(0, 28, 73);
+      flex-direction: column;
+      justify-content: center;
+      gap: 50px;
+      transform: translateY(-100%);
+      transition: 0.5s ease-in;
+    }
+    .nav__active {
+      transform: translateY(0);
+    }
+  }
+}
